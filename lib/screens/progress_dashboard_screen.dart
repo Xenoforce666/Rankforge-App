@@ -38,7 +38,7 @@ class ProgressDashboardScreen extends StatelessWidget {
                       ? 'Choose an exam to unlock complete progress insights.'
                       : 'Your ${selectedExam.shortTitle} preparation snapshot over the last 7 days.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                 ),
@@ -58,7 +58,9 @@ class ProgressDashboardScreen extends StatelessWidget {
                         icon: Icons.percent_rounded,
                         label: 'Syllabus',
                         value: '${provider.progressPercent}%',
-                        subtitle: selectedExam == null ? 'No exam selected' : 'Overall completion',
+                        subtitle: selectedExam == null
+                            ? 'No exam selected'
+                            : 'Overall completion',
                         tone: scheme.primary,
                       ),
                     ),
@@ -133,7 +135,7 @@ class _MetricSummaryCard extends StatelessWidget {
           Text(
             subtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.72),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.72),
               height: 1.35,
             ),
           ),
@@ -155,9 +157,8 @@ class _HoursChartCard extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final days = provider.weekDays;
-    final maxHours = days
-        .map(provider.hoursForDate)
-        .fold<double>(provider.todayTargetHours, (max, hours) => hours > max ? hours : max);
+    final maxHours = days.map(provider.hoursForDate).fold<double>(
+        provider.todayTargetHours, (max, hours) => hours > max ? hours : max);
 
     return ProgressCard(
       child: Column(
@@ -178,7 +179,7 @@ class _HoursChartCard extends StatelessWidget {
               Text(
                 '${provider.totalHours.toStringAsFixed(1)} h total',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: scheme.onSurface.withOpacity(0.72),
+                  color: scheme.onSurface.withValues(alpha: 0.72),
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -219,9 +220,12 @@ class _TasksSummaryCard extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final days = provider.weekDays;
-    final lastSevenTasks = days.fold<int>(0, (sum, day) => sum + provider.tasksForDate(day));
-    final productiveDays =
-        days.where((day) => provider.hoursForDate(day) > 0 || provider.tasksForDate(day) > 0).length;
+    final lastSevenTasks =
+        days.fold<int>(0, (sum, day) => sum + provider.tasksForDate(day));
+    final productiveDays = days
+        .where((day) =>
+            provider.hoursForDate(day) > 0 || provider.tasksForDate(day) > 0)
+        .length;
 
     return ProgressCard(
       child: Column(
@@ -263,7 +267,7 @@ class _TasksSummaryCard extends StatelessWidget {
           Text(
             '${provider.totalTasks} tasks completed overall',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -290,7 +294,7 @@ class _TasksMetric extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: theme.colorScheme.primary.withOpacity(0.08),
+        color: theme.colorScheme.primary.withValues(alpha: 0.08),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +309,7 @@ class _TasksMetric extends StatelessWidget {
           Text(
             label,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.72),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.72),
             ),
           ),
         ],
@@ -329,7 +333,8 @@ class _HourBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final height = hours == 0 ? 18.0 : 22 + (hours / maxHours).clamp(0, 1).toDouble() * 82;
+    final height =
+        hours == 0 ? 18.0 : 22 + (hours / maxHours).clamp(0, 1).toDouble() * 82;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -341,7 +346,9 @@ class _HourBar extends StatelessWidget {
             width: double.infinity,
             height: height,
             decoration: BoxDecoration(
-              color: hours > 0 ? scheme.primary : scheme.onSurface.withOpacity(0.12),
+              color: hours > 0
+                  ? scheme.primary
+                  : scheme.onSurface.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -349,7 +356,7 @@ class _HourBar extends StatelessWidget {
           Text(
             label,
             style: theme.textTheme.labelSmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -357,7 +364,7 @@ class _HourBar extends StatelessWidget {
           Text(
             hours == 0 ? '-' : hours.toStringAsFixed(hours % 1 == 0 ? 0 : 1),
             style: theme.textTheme.labelSmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.56),
+              color: scheme.onSurface.withValues(alpha: 0.56),
             ),
           ),
         ],
@@ -370,12 +377,12 @@ class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
     this.color,
-    this.size = 38,
   });
 
   final IconData icon;
   final Color? color;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
@@ -383,16 +390,16 @@ class _IconBadge extends StatelessWidget {
     final badgeColor = color ?? scheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.16),
+        color: badgeColor.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: badgeColor,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

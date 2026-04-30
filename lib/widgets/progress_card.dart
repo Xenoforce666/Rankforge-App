@@ -21,11 +21,11 @@ class ProgressCard extends StatelessWidget {
         color: scheme.surface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: scheme.primary.withOpacity(0.18),
+          color: scheme.primary.withValues(alpha: 0.18),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.18),
+            color: Colors.black.withValues(alpha: 0.18),
             blurRadius: 22,
             offset: const Offset(0, 10),
           ),

@@ -11,7 +11,8 @@ class DailyStudyTrackerScreen extends StatefulWidget {
   const DailyStudyTrackerScreen({super.key});
 
   @override
-  State<DailyStudyTrackerScreen> createState() => _DailyStudyTrackerScreenState();
+  State<DailyStudyTrackerScreen> createState() =>
+      _DailyStudyTrackerScreenState();
 }
 
 class _DailyStudyTrackerScreenState extends State<DailyStudyTrackerScreen> {
@@ -46,8 +47,10 @@ class _DailyStudyTrackerScreenState extends State<DailyStudyTrackerScreen> {
     _lastSyncedSnapshot = snapshot;
     _hoursController.text = todayLog == null
         ? ''
-        : todayLog.hoursStudied.toStringAsFixed(todayLog.hoursStudied % 1 == 0 ? 0 : 1);
-    _tasksController.text = todayLog == null ? '' : todayLog.tasksCompleted.toString();
+        : todayLog.hoursStudied
+            .toStringAsFixed(todayLog.hoursStudied % 1 == 0 ? 0 : 1);
+    _tasksController.text =
+        todayLog == null ? '' : todayLog.tasksCompleted.toString();
   }
 
   @override
@@ -77,7 +80,7 @@ class _DailyStudyTrackerScreenState extends State<DailyStudyTrackerScreen> {
                 Text(
                   'Log today once and your streak, XP, and weekly history update instantly.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                 ),
@@ -99,7 +102,8 @@ class _DailyStudyTrackerScreenState extends State<DailyStudyTrackerScreen> {
     );
   }
 
-  Future<void> _saveToday(BuildContext context, PrepQuestProvider provider) async {
+  Future<void> _saveToday(
+      BuildContext context, PrepQuestProvider provider) async {
     final hours = double.tryParse(_hoursController.text.trim()) ?? 0;
     final tasks = int.tryParse(_tasksController.text.trim()) ?? 0;
 
@@ -189,7 +193,7 @@ class _TodayEntryCard extends StatelessWidget {
           Text(
             'A saved entry with hours or tasks counts toward your streak.',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.64),
+              color: scheme.onSurface.withValues(alpha: 0.64),
             ),
           ),
         ],
@@ -210,9 +214,8 @@ class _SevenDayHistoryCard extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final days = provider.weekDays;
-    final maxHours = days
-        .map(provider.hoursForDate)
-        .fold<double>(provider.todayTargetHours, (max, hours) => hours > max ? hours : max);
+    final maxHours = days.map(provider.hoursForDate).fold<double>(
+        provider.todayTargetHours, (max, hours) => hours > max ? hours : max);
 
     return ProgressCard(
       child: Column(
@@ -251,7 +254,7 @@ class _SevenDayHistoryCard extends StatelessWidget {
           Text(
             '${(provider.weeklyConsistency * 100).round()}% weekly consistency',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -279,7 +282,8 @@ class _HistoryBar extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final hasEntry = hours > 0 || tasks > 0;
-    final height = hasEntry ? 24 + (hours / maxHours).clamp(0, 1).toDouble() * 62 : 18.0;
+    final height =
+        hasEntry ? 24 + (hours / maxHours).clamp(0, 1).toDouble() * 62 : 18.0;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -292,7 +296,9 @@ class _HistoryBar extends StatelessWidget {
             height: height,
             constraints: const BoxConstraints(minHeight: 18),
             decoration: BoxDecoration(
-              color: hasEntry ? scheme.primary : scheme.onSurface.withOpacity(0.12),
+              color: hasEntry
+                  ? scheme.primary
+                  : scheme.onSurface.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -300,7 +306,7 @@ class _HistoryBar extends StatelessWidget {
           Text(
             label,
             style: theme.textTheme.labelSmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.7),
+              color: scheme.onSurface.withValues(alpha: 0.7),
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -308,7 +314,7 @@ class _HistoryBar extends StatelessWidget {
           Text(
             hours == 0 ? '-' : hours.toStringAsFixed(hours % 1 == 0 ? 0 : 1),
             style: theme.textTheme.labelSmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.58),
+              color: scheme.onSurface.withValues(alpha: 0.58),
             ),
           ),
         ],
@@ -320,27 +326,27 @@ class _HistoryBar extends StatelessWidget {
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
-    this.size = 38,
   });
 
   final IconData icon;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.16),
+        color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: color,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

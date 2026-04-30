@@ -33,7 +33,7 @@ class ExamSelectionScreen extends StatelessWidget {
                 Text(
                   'Your daily targets, syllabus progress, and XP will follow the exam you select.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                 ),

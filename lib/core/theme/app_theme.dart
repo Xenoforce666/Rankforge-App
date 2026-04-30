@@ -78,7 +78,7 @@ class AppTheme {
       fontFamily: 'Roboto',
       visualDensity: VisualDensity.adaptivePlatformDensity,
       dividerTheme: DividerThemeData(
-        color: scheme.outlineVariant.withOpacity(0.35),
+        color: scheme.outlineVariant.withValues(alpha: 0.35),
         thickness: 1,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -93,7 +93,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size.fromHeight(48),
-          side: BorderSide(color: scheme.primary.withOpacity(0.55)),
+          side: BorderSide(color: scheme.primary.withValues(alpha: 0.55)),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           textStyle: const TextStyle(fontWeight: FontWeight.w700),
         ),
@@ -109,8 +109,8 @@ class AppTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: scheme.primary,
-        linearTrackColor: scheme.outlineVariant.withOpacity(0.3),
-        circularTrackColor: scheme.outlineVariant.withOpacity(0.25),
+        linearTrackColor: scheme.outlineVariant.withValues(alpha: 0.3),
+        circularTrackColor: scheme.outlineVariant.withValues(alpha: 0.25),
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
@@ -129,18 +129,22 @@ class AppTheme {
     return NavigationBarThemeData(
       backgroundColor: background,
       elevation: 0,
-      indicatorColor: selected.withOpacity(0.16),
+      indicatorColor: selected.withValues(alpha: 0.16),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       iconTheme: WidgetStateProperty.resolveWith((states) {
-        final color = states.contains(WidgetState.selected) ? selected : unselected;
+        final color =
+            states.contains(WidgetState.selected) ? selected : unselected;
         return IconThemeData(color: color, size: 22);
       }),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
-        final color = states.contains(WidgetState.selected) ? selected : unselected;
+        final color =
+            states.contains(WidgetState.selected) ? selected : unselected;
         return TextStyle(
           color: color,
           fontSize: 11,
-          fontWeight: states.contains(WidgetState.selected) ? FontWeight.w700 : FontWeight.w500,
+          fontWeight: states.contains(WidgetState.selected)
+              ? FontWeight.w700
+              : FontWeight.w500,
         );
       }),
     );

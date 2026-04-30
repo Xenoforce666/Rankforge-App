@@ -25,7 +25,6 @@ class _PrepQuestShellState extends State<PrepQuestShell> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<PrepQuestProvider>();
-    final selectedExam = provider.selectedExam;
 
     final pages = <Widget>[
       _HomeDashboardScreen(provider: provider),
@@ -97,7 +96,7 @@ class _TrackerHubScreen extends StatelessWidget {
             child: TabBar(
               indicatorColor: scheme.primary,
               labelColor: scheme.primary,
-              unselectedLabelColor: scheme.onSurface.withOpacity(0.7),
+              unselectedLabelColor: scheme.onSurface.withValues(alpha: 0.7),
               tabs: const [
                 Tab(
                   icon: Icon(Icons.checklist_rounded),
@@ -119,60 +118,6 @@ class _TrackerHubScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ShellPlaceholderScreen extends StatelessWidget {
-  const _ShellPlaceholderScreen({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                size: 56,
-                color: scheme.primary,
-              ),
-              const SizedBox(height: 20),
-              Text(
-                title,
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                subtitle,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: scheme.onSurface.withOpacity(0.75),
-                  height: 1.45,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -212,7 +157,7 @@ class _HomeDashboardScreen extends StatelessWidget {
                       ? 'Pick an exam to start tracking your preparation with focus.'
                       : 'Stay consistent today and keep your ${selectedExam.shortTitle} prep moving.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                 ),
@@ -308,14 +253,18 @@ class _TodayTargetCard extends StatelessWidget {
             label: 'Study hours',
             current: hoursDone.toStringAsFixed(hoursDone % 1 == 0 ? 0 : 1),
             target: targetHours.toStringAsFixed(targetHours % 1 == 0 ? 0 : 1),
-            progress: targetHours == 0 ? 0.0 : (hoursDone / targetHours).clamp(0, 1).toDouble(),
+            progress: targetHours == 0
+                ? 0.0
+                : (hoursDone / targetHours).clamp(0, 1).toDouble(),
           ),
           const SizedBox(height: 14),
           _TargetProgressRow(
             label: 'Tasks completed',
             current: '$tasksDone',
             target: '$targetTasks',
-            progress: targetTasks == 0 ? 0.0 : (tasksDone / targetTasks).clamp(0, 1).toDouble(),
+            progress: targetTasks == 0
+                ? 0.0
+                : (tasksDone / targetTasks).clamp(0, 1).toDouble(),
           ),
         ],
       ),
@@ -368,7 +317,7 @@ class _MetricCard extends StatelessWidget {
           Text(
             subtitle,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.72),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.72),
               height: 1.35,
             ),
           ),
@@ -433,12 +382,12 @@ class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
     this.color,
-    this.size = 38,
   });
 
   final IconData icon;
   final Color? color;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
@@ -446,16 +395,16 @@ class _IconBadge extends StatelessWidget {
     final badgeColor = color ?? scheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.16),
+        color: badgeColor.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: badgeColor,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

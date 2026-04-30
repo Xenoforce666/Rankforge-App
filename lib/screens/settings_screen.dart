@@ -61,7 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Text(
                   'Manage your local profile, theme, and app data.',
                   style: theme.textTheme.bodyLarge?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                 ),
@@ -89,7 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> _saveUsername(BuildContext context, PrepQuestProvider provider) async {
+  Future<void> _saveUsername(
+      BuildContext context, PrepQuestProvider provider) async {
     await provider.setUsername(_usernameController.text);
     if (!context.mounted) {
       return;
@@ -100,7 +101,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> _confirmReset(BuildContext context, PrepQuestProvider provider) async {
+  Future<void> _confirmReset(
+      BuildContext context, PrepQuestProvider provider) async {
     final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) {
@@ -199,7 +201,7 @@ class _UsernameCard extends StatelessWidget {
           Text(
             'Stored only on this device.',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: scheme.onSurface.withOpacity(0.64),
+              color: scheme.onSurface.withValues(alpha: 0.64),
             ),
           ),
         ],
@@ -242,7 +244,7 @@ class _ThemeCard extends StatelessWidget {
                 Text(
                   'Toggle the app between dark and light modes.',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.35,
                   ),
                 ),
@@ -296,7 +298,7 @@ class _ResetCard extends StatelessWidget {
           Text(
             'Remove all local progress, streaks, preferences, and saved study history.',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
               height: 1.4,
             ),
           ),
@@ -309,7 +311,7 @@ class _ResetCard extends StatelessWidget {
               label: const Text('Reset all data'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: scheme.error,
-                side: BorderSide(color: scheme.error.withOpacity(0.45)),
+                side: BorderSide(color: scheme.error.withValues(alpha: 0.45)),
               ),
             ),
           ),
@@ -346,7 +348,7 @@ class _AboutCard extends StatelessWidget {
                 Text(
                   'Version 1.0 MVP',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                   ),
                 ),
               ],
@@ -362,12 +364,12 @@ class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
     this.color,
-    this.size = 38,
   });
 
   final IconData icon;
   final Color? color;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
@@ -375,16 +377,16 @@ class _IconBadge extends StatelessWidget {
     final badgeColor = color ?? scheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.16),
+        color: badgeColor.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: badgeColor,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }
