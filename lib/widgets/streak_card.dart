@@ -38,9 +38,11 @@ class StreakCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            streak == 0 ? 'Log study today to begin' : 'Keep the run alive today',
+            streak == 0
+                ? 'Log study today to begin'
+                : 'Keep the run alive today',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurface.withOpacity(0.72),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.72),
               height: 1.35,
             ),
           ),
@@ -54,26 +56,26 @@ class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
     required this.color,
-    this.size = 38,
   });
 
   final IconData icon;
   final Color color;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.16),
+        color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: color,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

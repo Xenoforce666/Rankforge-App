@@ -84,7 +84,7 @@ class _NoExamSelectedState extends StatelessWidget {
                 Text(
                   'Your syllabus checklist will appear here once an exam is selected.',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.72),
+                    color: scheme.onSurface.withValues(alpha: 0.72),
                     height: 1.45,
                   ),
                   textAlign: TextAlign.center,
@@ -124,7 +124,7 @@ class _TrackerHeader extends StatelessWidget {
         Text(
           '${exam.title} preparation checklist',
           style: theme.textTheme.bodyLarge?.copyWith(
-            color: scheme.onSurface.withOpacity(0.72),
+            color: scheme.onSurface.withValues(alpha: 0.72),
             height: 1.45,
           ),
         ),
@@ -187,7 +187,7 @@ class _OverallProgressSummary extends StatelessWidget {
           Text(
             '$completed of $total topics completed',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
             ),
           ),
         ],
@@ -225,7 +225,7 @@ class _SubjectTrackerSection extends StatelessWidget {
           tilePadding: const EdgeInsets.fromLTRB(18, 12, 18, 10),
           childrenPadding: const EdgeInsets.fromLTRB(10, 0, 10, 12),
           iconColor: scheme.primary,
-          collapsedIconColor: scheme.onSurface.withOpacity(0.72),
+          collapsedIconColor: scheme.onSurface.withValues(alpha: 0.72),
           title: Text(
             subject.title,
             style: theme.textTheme.titleMedium?.copyWith(
@@ -248,7 +248,7 @@ class _SubjectTrackerSection extends StatelessWidget {
                 Text(
                   '$completed of $total topics complete',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: scheme.onSurface.withOpacity(0.66),
+                    color: scheme.onSurface.withValues(alpha: 0.66),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -300,7 +300,9 @@ class _TopicCheckboxTile extends StatelessWidget {
       title: Text(
         topic.title,
         style: theme.textTheme.bodyMedium?.copyWith(
-          color: isComplete ? scheme.onSurface.withOpacity(0.64) : scheme.onSurface,
+          color: isComplete
+              ? scheme.onSurface.withValues(alpha: 0.64)
+              : scheme.onSurface,
           decoration: isComplete ? TextDecoration.lineThrough : null,
           decorationColor: scheme.primary,
           fontWeight: FontWeight.w600,
@@ -313,27 +315,27 @@ class _TopicCheckboxTile extends StatelessWidget {
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
-    this.size = 38,
   });
 
   final IconData icon;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.16),
+        color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: color,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

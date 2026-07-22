@@ -46,7 +46,7 @@ class XpBar extends StatelessWidget {
                     Text(
                       '$totalXp XP earned',
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurface.withOpacity(0.72),
+                        color: scheme.onSurface.withValues(alpha: 0.72),
                       ),
                     ),
                   ],
@@ -73,7 +73,7 @@ class XpBar extends StatelessWidget {
           Text(
             '$xpIntoLevel/${PrepQuestProvider.xpPerLevel} XP in this level | $xpToNextLevel XP to next level',
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurface.withOpacity(0.72),
+              color: scheme.onSurface.withValues(alpha: 0.72),
             ),
           ),
         ],
@@ -85,27 +85,27 @@ class XpBar extends StatelessWidget {
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
-    this.size = 38,
   });
 
   final IconData icon;
-  final double size;
+
+  static const double _badgeSize = 38;
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme.primary;
 
     return Container(
-      width: size,
-      height: size,
+      width: _badgeSize,
+      height: _badgeSize,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.16),
+        color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
         icon,
         color: color,
-        size: size * 0.56,
+        size: _badgeSize * 0.56,
       ),
     );
   }

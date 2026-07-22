@@ -57,7 +57,7 @@ class ExamCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurface.withOpacity(0.72),
+                        color: scheme.onSurface.withValues(alpha: 0.72),
                       ),
                     ),
                   ],
@@ -74,24 +74,21 @@ class ExamCard extends StatelessWidget {
 class _IconBadge extends StatelessWidget {
   const _IconBadge({
     required this.icon,
-    this.color,
     this.size = 38,
   });
 
   final IconData icon;
-  final Color? color;
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final badgeColor = color ?? scheme.primary;
+    final badgeColor = Theme.of(context).colorScheme.primary;
 
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: badgeColor.withOpacity(0.16),
+        color: badgeColor.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Icon(
